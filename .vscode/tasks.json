@@ -1,0 +1,32 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Setup (install dependencies)",
+      "type": "shell",
+      "command": "./scripts/setup.sh",
+      "windows": {
+        "command": "powershell -ExecutionPolicy Bypass -File scripts\\setup.ps1"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Run app",
+      "type": "shell",
+      "command": "./scripts/run.sh",
+      "windows": {
+        "command": "powershell -ExecutionPolicy Bypass -File scripts\\run.ps1"
+      },
+      "isBackground": true,
+      "problemMatcher": [],
+      "group": { "kind": "build", "isDefault": true }
+    },
+    {
+      "label": "Run tests",
+      "type": "shell",
+      "command": "uv run pytest",
+      "problemMatcher": [],
+      "group": { "kind": "test", "isDefault": true }
+    }
+  ]
+}

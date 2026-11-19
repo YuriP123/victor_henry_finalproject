@@ -1,0 +1,6 @@
+[server]
+# Reload the app automatically when a file is saved.
+runOnSave = true
+
+[browser]
+gatherUsageStats = false

@@ -1,29 +1,36 @@
 {
-  "name": "Python 3.14",
-  // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+  "name": "Chat App (Python 3.14)",
   "image": "mcr.microsoft.com/devcontainers/python:3-3.14-bookworm",
   "customizations": {
     "codespaces": {
       "openFiles": [
         "README.md",
+        "TASKS.md",
         "streamlit_app.py"
       ]
     },
     "vscode": {
-      "settings": {},
+      "settings": {
+        "python.defaultInterpreterPath": "/workspaces/${localWorkspaceFolderBasename}/.venv/bin/python"
+      },
       "extensions": [
         "ms-python.python",
-        "ms-python.vscode-pylance"
+        "ms-python.vscode-pylance",
+        "ms-python.debugpy",
+        "charliermarsh.ruff",
+        "ms-vsliveshare.vsliveshare"
       ]
     }
   },
-  "updateContentCommand": "if [ -f packages.txt ]; then sudo apt update && sudo apt upgrade -y && sudo xargs apt install -y < packages.txt; fi; if ! command -v uv >/dev/null 2>&1; then curl -LsSf https://astral.sh/uv/install.sh | sh; fi; UV_BIN=$(command -v uv || echo \"$HOME/.local/bin/uv\"); UV_PROJECT_ENVIRONMENT=\"$HOME/.venvs/blank-app-template\" \"$UV_BIN\" sync",
+  // Runs once when the codespace is created (and during prebuilds).
+  "updateContentCommand": "if [ -f packages.txt ]; then sudo apt update && sudo xargs apt install -y < packages.txt; fi; bash scripts/setup.sh",
+  // Starts the app every time someone opens the codespace.
   "postAttachCommand": {
-    "server": "UV_BIN=$(command -v uv || echo \"$HOME/.local/bin/uv\"); UV_PROJECT_ENVIRONMENT=\"$HOME/.venvs/blank-app-template\" \"$UV_BIN\" run streamlit run streamlit_app.py --server.enableCORS false --server.enableXsrfProtection false"
+    "server": "bash scripts/run.sh --server.headless true --server.enableCORS false --server.enableXsrfProtection false"
   },
   "portsAttributes": {
     "8501": {
-      "label": "Application",
+      "label": "GPA Calculator",
       "onAutoForward": "openPreview"
     }
   },

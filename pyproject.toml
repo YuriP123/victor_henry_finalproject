@@ -1,12 +1,24 @@
 [project]
-name = "blank-app-template"
+name = "gpa-calculator"
 version = "0.1.0"
-description = "A simple Streamlit app template."
+description = "A GPA calculator with a chat bot, built during the VS Code lesson."
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
     "streamlit>=1.61.1",
 ]
 
+[dependency-groups]
+dev = [
+    "pytest>=8",
+    "watchdog>=6.0.0",
+]
+
 [tool.uv]
 package = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+# Hide a deprecation warning from a third-party plugin (anyio), not our code.
+filterwarnings = ["ignore::DeprecationWarning:anyio.*", "ignore:.*CallSpec2.*"]
